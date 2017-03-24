@@ -24,6 +24,7 @@ public class IP4_calculator implements Serializable {
     private long quantity_work_ip;
     private int address_start;
     private int address_finish;
+    private boolean relations = false;
 
     private String first;
     private String netw;
@@ -102,39 +103,13 @@ public class IP4_calculator implements Serializable {
         System.out.println("Number of work addresses " + quantity_work_ip);
         System.out.println("IP address of the first host " + Integer.toBinaryString(address_start));
         System.out.println("IP address of the last host " + Integer.toBinaryString(address_finish));
-        if (second_IP >= IP_network && second_IP <= broadcast)
+        if (second_IP >= IP_network && second_IP <= broadcast) {
             System.out.println("IP addresses are in the same range");
+            relations = true;
+        }
         else
             System.out.println("IP addresses are in the different range");
-        serial_out(ser);
     }
 
-    /**
-     * метод производит сериализацию
-     * @param file_name - путь к файлу для сериализации
-     */
-    private void serial_out(String file_name) {
-        try (FileOutputStream fs = new FileOutputStream(file_name+"\\file_ser.ser", true)) {
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject(first_IP);
-            os.writeObject(netmask);
-            os.writeObject(second_IP);
-            os.writeObject(wildcard_mask);
-            os.writeObject(IP_network);
-            os.writeObject(broadcast);
-            os.writeObject(quantity_access_ip);
-            os.writeObject(quantity_work_ip);
-            os.writeObject(address_start);
-            os.writeObject(address_finish);
 
-            os.writeObject(first);
-            os.writeObject(netw);
-            os.writeObject(second);
-            os.flush();
-            os.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-    }
 }
